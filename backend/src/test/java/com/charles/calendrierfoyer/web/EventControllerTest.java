@@ -24,19 +24,23 @@ class EventControllerTest {
     void chaqueRouteDelegueAuService() {
         LocalDate from = LocalDate.of(2026, 3, 1);
         LocalDate to = LocalDate.of(2026, 3, 31);
-        EventCreateDto dto =
-                new EventCreateDto("Garderie", null, null, null, true, from, null, null, null, null, null, null);
+        EventCreateDto dto = new EventCreateDto(
+                "Garderie", null, null, null, true, from, null, null, null, null, null, null, null, null, null, null);
 
         controller.occurrences(from, to);
         controller.findById(1L);
         controller.create(dto);
         controller.update(1L, dto);
         controller.delete(1L);
+        controller.markDone(1L, from);
+        controller.unmarkDone(1L, from);
 
         verify(eventService).occurrencesInRange(from, to);
         verify(eventService).findById(1L);
         verify(eventService).create(dto);
         verify(eventService).update(1L, dto);
         verify(eventService).delete(1L);
+        verify(eventService).setDone(1L, from, true);
+        verify(eventService).setDone(1L, from, false);
     }
 }

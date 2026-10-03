@@ -46,4 +46,17 @@ public class EventController {
     public void delete(@PathVariable Long id) {
         eventService.delete(id);
     }
+
+    /** Coche "c'est fait" l'occurrence de cet evenement a cette date. */
+    @PutMapping("/{id}/done/{date}")
+    public void markDone(
+            @PathVariable Long id, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        eventService.setDone(id, date, true);
+    }
+
+    @DeleteMapping("/{id}/done/{date}")
+    public void unmarkDone(
+            @PathVariable Long id, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        eventService.setDone(id, date, false);
+    }
 }

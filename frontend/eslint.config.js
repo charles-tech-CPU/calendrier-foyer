@@ -30,5 +30,11 @@ export default [
       'vue/html-indent': 'off',
       'vue/html-self-closing': 'off'
     }
+  },
+
+  // Scripts d'outillage (ex: generation de la bibliotheque d'emojis) : executes par Node, pas le navigateur
+  {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: { globals: globals.node }
   }
 ]

@@ -5,6 +5,7 @@ import com.charles.calendrierfoyer.domain.RecurrenceFrequency;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,26 @@ import org.springframework.stereotype.Service;
 public class RecurrenceService {
 
     private static final int SAFETY_CAP = 3660; // large marge (~10 ans de pas quotidiens)
+
+    /** Une periode [start, end] (start == end pour un evenement sur un seul jour). */
+    public record Span(LocalDate start, LocalDate end) {}
+
+    /** Duree d'une periode en jours supplementaires (0 = un seul jour). */
+    public static long extraDays(Event e) {
+        return e.getEndDate() == null ? 0 : ChronoUnit.DAYS.between(e.getStartDate(), e.getEndDate());
+    }
+
+    /**
+     * Toutes les periodes de l'evenement qui chevauchent [from, to] : chaque
+     * occurrence commence a une date calculee par occurrenceDates et dure
+     * autant de jours que la periode d'origine (startDate..endDate).
+     */
+    public List<Span> occurrenceSpans(Event e, LocalDate from, LocalDate to) {
+        long extra = extraDays(e);
+        return occurrenceDates(e, from.minusDays(extra), to).stream()
+                .map(start -> new Span(start, start.plusDays(extra)))
+                .toList();
+    }
 
     public List<LocalDate> occurrenceDates(Event e, LocalDate from, LocalDate to) {
         if (e.getRecurrenceFrequency() == RecurrenceFrequency.NONE) {

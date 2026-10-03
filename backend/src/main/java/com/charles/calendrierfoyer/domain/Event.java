@@ -48,6 +48,13 @@ public class Event {
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 
+    /**
+     * Dernier jour d'une periode sur plusieurs jours (ex: vacances), inclus.
+     * Null = evenement sur un seul jour. Une periode est toujours en journee entiere.
+     */
+    @Column(name = "end_date")
+    private LocalDate endDate;
+
     /** Nul si allDay = true. */
     @Column(name = "start_time")
     private LocalTime startTime;
@@ -70,4 +77,24 @@ public class Event {
     /** Null = la serie ne s'arrete jamais. */
     @Column(name = "recurrence_end_date")
     private LocalDate recurrenceEndDate;
+
+    /**
+     * Rappel en minutes avant le debut (0 = a l'heure pile, null = aucun).
+     * Pour un evenement journee entiere, le decompte part de 8h le jour meme.
+     */
+    @Column(name = "reminder_minutes")
+    private Integer reminderMinutes;
+
+    /** Categorie (icone) optionnelle ; nulle = evenement sans categorie particuliere. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    /**
+     * Personne concernee (optionnelle). Si renseignee, l'evenement s'affiche avec
+     * la couleur de cette personne plutot qu'avec sa propre couleur.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_id")
+    private Person person;
 }

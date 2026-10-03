@@ -18,4 +18,8 @@ public record EventCreateDto(
         RecurrenceFrequency recurrenceFrequency,
         Integer recurrenceInterval,
         String recurrenceDaysOfWeek,
-        LocalDate recurrenceEndDate) {}
+        LocalDate recurrenceEndDate,
+        Long categoryId,
+        Long personId,
+        Integer reminderMinutes,
+        LocalDate endDate) {}

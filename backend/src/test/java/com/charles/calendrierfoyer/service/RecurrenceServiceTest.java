@@ -100,4 +100,23 @@ class RecurrenceServiceTest {
         assertThat(service.occurrenceDates(e, LocalDate.of(2026, 2, 1), LocalDate.of(2026, 2, 28)))
                 .isEmpty();
     }
+
+    @Test
+    void uneSeriePeriodiqueDonneDesPeriodesQuiChevauchentLaPlage() {
+        // Vacances du 30 mars au 2 avril, chaque annee
+        Event e = event(LocalDate.of(2025, 3, 30), RecurrenceFrequency.YEARLY, 1);
+        e.setEndDate(LocalDate.of(2025, 4, 2));
+
+        assertThat(service.occurrenceSpans(e, LocalDate.of(2026, 4, 1), LocalDate.of(2026, 4, 30)))
+                .containsExactly(new RecurrenceService.Span(LocalDate.of(2026, 3, 30), LocalDate.of(2026, 4, 2)));
+        assertThat(RecurrenceService.extraDays(e)).isEqualTo(3);
+    }
+
+    @Test
+    void unEvenementSurUnJourDonneUnePeriodeDUnJour() {
+        Event e = event(LocalDate.of(2026, 3, 10), RecurrenceFrequency.NONE, 1);
+
+        assertThat(service.occurrenceSpans(e, LocalDate.of(2026, 3, 1), LocalDate.of(2026, 3, 31)))
+                .containsExactly(new RecurrenceService.Span(LocalDate.of(2026, 3, 10), LocalDate.of(2026, 3, 10)));
+    }
 }
