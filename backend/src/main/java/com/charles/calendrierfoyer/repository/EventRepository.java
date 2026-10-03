@@ -1,12 +1,11 @@
 package com.charles.calendrierfoyer.repository;
 
 import com.charles.calendrierfoyer.domain.Event;
+import java.time.LocalDate;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import java.time.LocalDate;
-import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
 
@@ -17,11 +16,11 @@ public interface EventRepository extends JpaRepository<Event, Long> {
      *   pas deja terminee avant le debut de la plage (filtrage large ; l'expansion
      *   exacte des occurrences se fait ensuite en Java via RecurrenceService).
      */
-    @Query("SELECT e FROM Event e WHERE " +
-            "(e.recurrenceFrequency = com.charles.calendrierfoyer.domain.RecurrenceFrequency.NONE " +
-            "   AND e.startDate BETWEEN :from AND :to) " +
-            "OR (e.recurrenceFrequency <> com.charles.calendrierfoyer.domain.RecurrenceFrequency.NONE " +
-            "   AND e.startDate <= :to " +
-            "   AND (e.recurrenceEndDate IS NULL OR e.recurrenceEndDate >= :from))")
+    @Query("SELECT e FROM Event e WHERE "
+            + "(e.recurrenceFrequency = com.charles.calendrierfoyer.domain.RecurrenceFrequency.NONE "
+            + "   AND e.startDate BETWEEN :from AND :to) "
+            + "OR (e.recurrenceFrequency <> com.charles.calendrierfoyer.domain.RecurrenceFrequency.NONE "
+            + "   AND e.startDate <= :to "
+            + "   AND (e.recurrenceEndDate IS NULL OR e.recurrenceEndDate >= :from))")
     List<Event> findRelevantForRange(@Param("from") LocalDate from, @Param("to") LocalDate to);
 }

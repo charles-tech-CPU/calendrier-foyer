@@ -5,11 +5,10 @@ import com.charles.calendrierfoyer.dto.EventDto;
 import com.charles.calendrierfoyer.dto.EventOccurrenceDto;
 import com.charles.calendrierfoyer.service.EventService;
 import jakarta.validation.Valid;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/events")

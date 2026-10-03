@@ -11,7 +11,7 @@
         <input v-model="form.title" required placeholder="Ex: Garderie, Rendez-vous..." />
 
         <label class="inline" style="margin-top:14px">
-          <input type="checkbox" v-model="form.allDay" style="width:auto; min-height:auto" />
+          <input v-model="form.allDay" type="checkbox" style="width:auto; min-height:auto" />
           Journée entière
         </label>
 
@@ -57,7 +57,7 @@
             <label>Jours concernés</label>
             <div class="checkbox-days">
               <label v-for="d in daysOfWeek" :key="d.code">
-                <input type="checkbox" :value="d.code" v-model="form.selectedDays" />
+                <input v-model="form.selectedDays" type="checkbox" :value="d.code" />
                 {{ d.label }}
               </label>
             </div>
@@ -70,7 +70,7 @@
         <p v-if="error" style="color:#ff6b6b">{{ error }}</p>
 
         <div class="inline" style="margin-top:18px; justify-content:space-between">
-          <button type="button" class="danger" v-if="isEditing" @click="remove">Supprimer</button>
+          <button v-if="isEditing" type="button" class="danger" @click="remove">Supprimer</button>
           <div class="inline" style="margin-left:auto">
             <button type="button" class="secondary" @click="$emit('close')">Annuler</button>
             <button type="submit">Enregistrer</button>

@@ -7,12 +7,11 @@ import com.charles.calendrierfoyer.dto.EventDto;
 import com.charles.calendrierfoyer.dto.EventOccurrenceDto;
 import com.charles.calendrierfoyer.repository.EventRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EventService {
@@ -34,8 +33,15 @@ public class EventService {
         return candidates.stream()
                 .flatMap(e -> recurrenceService.occurrenceDates(e, from, to).stream()
                         .map(date -> new EventOccurrenceDto(
-                                e.getId(), e.getTitle(), e.getDescription(), e.getLocation(), e.getColor(),
-                                e.isAllDay(), date, e.getStartTime(), e.getEndTime(),
+                                e.getId(),
+                                e.getTitle(),
+                                e.getDescription(),
+                                e.getLocation(),
+                                e.getColor(),
+                                e.isAllDay(),
+                                date,
+                                e.getStartTime(),
+                                e.getEndTime(),
                                 e.getRecurrenceFrequency() != RecurrenceFrequency.NONE)))
                 .sorted(Comparator.comparing(EventOccurrenceDto::date)
                         .thenComparing(o -> o.startTime() == null ? java.time.LocalTime.MIN : o.startTime()))
@@ -65,20 +71,24 @@ public class EventService {
     }
 
     private Event getOrThrow(Long id) {
-        return eventRepository.findById(id)
+        return eventRepository
+                .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Evenement introuvable: " + id));
     }
 
     private void apply(Event e, EventCreateDto dto) {
         boolean allDay = Boolean.TRUE.equals(dto.allDay());
         if (!allDay && dto.startTime() == null) {
-            throw new IllegalArgumentException("Une heure de debut est requise pour un evenement qui n'est pas journee entiere.");
+            throw new IllegalArgumentException(
+                    "Une heure de debut est requise pour un evenement qui n'est pas journee entiere.");
         }
         if (dto.startTime() != null && dto.endTime() != null && !dto.endTime().isAfter(dto.startTime())) {
             throw new IllegalArgumentException("L'heure de fin doit etre apres l'heure de debut.");
         }
-        RecurrenceFrequency frequency = dto.recurrenceFrequency() == null ? RecurrenceFrequency.NONE : dto.recurrenceFrequency();
-        int interval = (dto.recurrenceInterval() == null || dto.recurrenceInterval() < 1) ? 1 : dto.recurrenceInterval();
+        RecurrenceFrequency frequency =
+                dto.recurrenceFrequency() == null ? RecurrenceFrequency.NONE : dto.recurrenceFrequency();
+        int interval =
+                (dto.recurrenceInterval() == null || dto.recurrenceInterval() < 1) ? 1 : dto.recurrenceInterval();
 
         e.setTitle(dto.title());
         e.setDescription(dto.description());
@@ -95,8 +105,19 @@ public class EventService {
     }
 
     private EventDto toDto(Event e) {
-        return new EventDto(e.getId(), e.getTitle(), e.getDescription(), e.getLocation(), e.getColor(),
-                e.isAllDay(), e.getStartDate(), e.getStartTime(), e.getEndTime(),
-                e.getRecurrenceFrequency(), e.getRecurrenceInterval(), e.getRecurrenceDaysOfWeek(), e.getRecurrenceEndDate());
+        return new EventDto(
+                e.getId(),
+                e.getTitle(),
+                e.getDescription(),
+                e.getLocation(),
+                e.getColor(),
+                e.isAllDay(),
+                e.getStartDate(),
+                e.getStartTime(),
+                e.getEndTime(),
+                e.getRecurrenceFrequency(),
+                e.getRecurrenceInterval(),
+                e.getRecurrenceDaysOfWeek(),
+                e.getRecurrenceEndDate());
     }
 }

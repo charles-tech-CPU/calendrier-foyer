@@ -1,12 +1,11 @@
 package com.charles.calendrierfoyer.domain;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 /**
  * Un evenement du calendrier unique et partage du foyer. Peut etre ponctuel

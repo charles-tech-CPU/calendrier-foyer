@@ -2,12 +2,11 @@ package com.charles.calendrierfoyer.service;
 
 import com.charles.calendrierfoyer.domain.Event;
 import com.charles.calendrierfoyer.domain.RecurrenceFrequency;
-import org.springframework.stereotype.Service;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.*;
+import org.springframework.stereotype.Service;
 
 /**
  * Calcule les dates d'occurrence d'un evenement sur une plage [from, to],
@@ -48,7 +47,8 @@ public class RecurrenceService {
                 }
             }
             case WEEKLY -> {
-                Set<DayOfWeek> days = parseDaysOfWeek(e.getRecurrenceDaysOfWeek(), e.getStartDate().getDayOfWeek());
+                Set<DayOfWeek> days = parseDaysOfWeek(
+                        e.getRecurrenceDaysOfWeek(), e.getStartDate().getDayOfWeek());
                 LocalDate weekStart = e.getStartDate().with(DayOfWeek.MONDAY);
                 int i = 0;
                 while (!weekStart.isAfter(rangeEnd) && i < SAFETY_CAP) {
@@ -83,8 +83,7 @@ public class RecurrenceService {
                     i++;
                 }
             }
-            default -> {
-            }
+            default -> {}
         }
 
         Collections.sort(dates);

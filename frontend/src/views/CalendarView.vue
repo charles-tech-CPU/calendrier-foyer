@@ -11,7 +11,7 @@
 
   <main>
     <div class="calendar-grid">
-      <div class="weekday-label" v-for="w in weekdayLabels" :key="w">{{ w }}</div>
+      <div v-for="w in weekdayLabels" :key="w" class="weekday-label">{{ w }}</div>
       <div
         v-for="day in gridDays" :key="day.iso"
         class="day-cell"
@@ -35,7 +35,7 @@
   </main>
 
   <!-- Panneau des evenements du jour selectionne -->
-  <div class="overlay" v-if="selectedDay" @click.self="selectedDay = null">
+  <div v-if="selectedDay" class="overlay" @click.self="selectedDay = null">
     <div class="panel">
       <div class="panel-header">
         <h2 style="margin:0">{{ formatFullDate(selectedDay) }}</h2>
@@ -55,10 +55,10 @@
         <div class="event-color-dot" :style="{ background: occ.color || '#2b6cb0' }"></div>
         <div>
           <div class="event-title">{{ occ.title }}<span v-if="occ.recurring"> 🔁</span></div>
-          <div class="event-time" v-if="!occ.allDay">
+          <div v-if="!occ.allDay" class="event-time">
             {{ formatTime(occ.startTime) }}<span v-if="occ.endTime"> - {{ formatTime(occ.endTime) }}</span>
           </div>
-          <div class="event-time" v-if="occ.location">{{ occ.location }}</div>
+          <div v-if="occ.location" class="event-time">{{ occ.location }}</div>
         </div>
       </div>
 
