@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/calendrier_foyer
+    username: ${DB_USER:calendrier_user}
+    password: ${DB_PASSWORD:calendrier_password}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+
+server:
+  port: 8084
