@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:8084/api'
+const BASE_URL = `http://${window.location.hostname}:8084/api`
 const client = axios.create({ baseURL: BASE_URL })
 
 // Construit AAAA-MM-JJ a partir des composantes LOCALES de la date (jamais
