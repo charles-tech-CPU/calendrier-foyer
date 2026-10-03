@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay" @click.self="$emit('close')">
+  <div class="overlay" @click.self="$emit('close')" @keydown.esc="$emit('close')">
     <div class="panel wide">
       <div class="panel-header">
         <h2 style="margin:0">{{ isEditing ? 'Modifier la catégorie' : 'Nouvelle catégorie' }}</h2>
@@ -11,8 +11,8 @@
         <div class="preview">
           <div class="preview-icon">{{ form.icon || '❔' }}</div>
           <div style="flex:1">
-            <label style="margin-top:0">Nom</label>
-            <input v-model="form.name" required maxlength="60" placeholder="Ex: Piscine, Vider le lave-vaisselle…" />
+            <label for="category-1" style="margin-top:0">Nom</label>
+            <input id="category-1" v-model="form.name" required maxlength="60" placeholder="Ex: Piscine, Vider le lave-vaisselle…" />
           </div>
         </div>
 

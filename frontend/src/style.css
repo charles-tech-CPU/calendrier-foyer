@@ -82,6 +82,12 @@ input, select, textarea {
 textarea { min-height: 80px; }
 label { display: block; font-size: 14px; font-weight: 600; color: var(--text-muted); margin: 14px 0 6px; }
 
+/* Texte lu par les lecteurs d'ecran mais invisible a l'ecran */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
 .inline { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .hint { color: var(--text-muted); font-size: 14px; }
 .error { color: var(--danger); font-weight: 600; }

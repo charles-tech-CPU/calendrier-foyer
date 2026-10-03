@@ -18,6 +18,10 @@ function byId(id) {
 }
 
 export function useCategories() {
-  if (!loaded) reload()
+  if (!loaded) {
+    reload().catch(() => {
+      loaded = false
+    })
+  }
   return { categories, reload, byId }
 }

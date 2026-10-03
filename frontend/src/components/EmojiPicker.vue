@@ -1,7 +1,8 @@
 <template>
   <!-- Bibliotheque d'icones (~1600 emojis), avec recherche en francais et onglets par theme -->
   <div class="picker">
-    <input v-model="search" type="search" placeholder="🔍 Chercher une icône : chien, piscine, gâteau, voiture…" />
+    <label for="emoji-search" class="sr-only">Chercher une icône</label>
+    <input id="emoji-search" v-model="search" type="search" placeholder="🔍 Chercher une icône : chien, piscine, gâteau, voiture…" />
 
     <div v-if="!search" class="group-tabs">
       <button

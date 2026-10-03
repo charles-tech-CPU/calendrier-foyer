@@ -18,7 +18,7 @@ let reloadNow = null
 
 // A appeler apres l'enregistrement d'un evenement, pour prendre en compte son rappel sans attendre
 export function refreshReminders() {
-  if (reloadNow) reloadNow()
+  if (reloadNow) void reloadNow()
 }
 
 export function startOf(occ) {
@@ -115,7 +115,7 @@ export function useReminders() {
 
   onMounted(() => {
     reloadNow = reload
-    reload()
+    void reload()
     checkTimer = setInterval(check, CHECK_EVERY_MS)
     reloadTimer = setInterval(reload, RELOAD_EVERY_MS)
   })

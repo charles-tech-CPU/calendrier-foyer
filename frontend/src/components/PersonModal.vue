@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay" @click.self="$emit('close')">
+  <div class="overlay" @click.self="$emit('close')" @keydown.esc="$emit('close')">
     <div class="panel">
       <div class="panel-header">
         <h2 style="margin:0">{{ isEditing ? 'Modifier' : 'Nouvelle personne' }}</h2>
@@ -23,14 +23,14 @@
           </div>
         </div>
 
-        <label>Prénom</label>
-        <input v-model="form.firstName" required maxlength="80" placeholder="Ex: Caitlyn" />
+        <label for="person-1">Prénom</label>
+        <input id="person-1" v-model="form.firstName" required maxlength="80" placeholder="Ex: Caitlyn" />
 
-        <label>Nom</label>
-        <input v-model="form.lastName" required maxlength="80" />
+        <label for="person-2">Nom</label>
+        <input id="person-2" v-model="form.lastName" required maxlength="80" />
 
-        <label>Date de naissance</label>
-        <input v-model="form.birthDate" type="date" required :max="todayIso" />
+        <label for="person-3">Date de naissance</label>
+        <input id="person-3" v-model="form.birthDate" type="date" required :max="todayIso" />
 
         <label>Couleur</label>
         <div class="swatches">

@@ -23,6 +23,10 @@ function photoUrl(person) {
 }
 
 export function usePersons() {
-  if (!loaded) reload()
+  if (!loaded) {
+    reload().catch(() => {
+      loaded = false
+    })
+  }
   return { persons, reload, byId, photoUrl }
 }

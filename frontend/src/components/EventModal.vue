@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay" @click.self="$emit('close')">
+  <div class="overlay" @click.self="$emit('close')" @keydown.esc="$emit('close')">
     <div class="panel">
       <div class="panel-header">
         <h2 style="margin:0">{{ isEditing ? 'Modifier' : 'Nouvel' }} évènement</h2>
@@ -54,8 +54,8 @@
           Ajoute les membres de la famille depuis l'écran « 👨‍👩‍👧 Famille » pour pouvoir leur associer des évènements.
         </p>
 
-        <label>Titre</label>
-        <input v-model="form.title" required placeholder="Ex: Garderie, Rendez-vous..." />
+        <label for="event-1">Titre</label>
+        <input id="event-1" v-model="form.title" required placeholder="Ex: Garderie, Rendez-vous..." />
 
         <!-- 3. Quand ? Un seul jour, ou une periode (ex: vacances du ... au ...) -->
         <label>Quand ?</label>
@@ -71,20 +71,20 @@
         <template v-if="form.isPeriod">
           <div class="inline">
             <div style="flex:1">
-              <label>Du</label>
-              <input v-model="form.startDate" type="date" required />
+              <label for="event-2">Du</label>
+              <input id="event-2" v-model="form.startDate" type="date" required />
             </div>
             <div style="flex:1">
-              <label>Au (inclus)</label>
-              <input v-model="form.endDate" type="date" required :min="form.startDate" />
+              <label for="event-3">Au (inclus)</label>
+              <input id="event-3" v-model="form.endDate" type="date" required :min="form.startDate" />
             </div>
           </div>
           <p v-if="periodDays > 1" class="hint">🗓️ {{ periodDays }} jours</p>
         </template>
 
         <template v-else>
-          <label>Date</label>
-          <input v-model="form.startDate" type="date" required />
+          <label for="event-4">Date</label>
+          <input id="event-4" v-model="form.startDate" type="date" required />
 
           <label class="inline" style="margin-top:14px">
             <input v-model="form.allDay" type="checkbox" style="width:auto; min-height:auto" />
@@ -95,26 +95,26 @@
         <template v-if="!form.allDay">
           <div class="inline">
             <div style="flex:1">
-              <label>Heure de début</label>
-              <input v-model="form.startTime" type="time" required />
+              <label for="event-5">Heure de début</label>
+              <input id="event-5" v-model="form.startTime" type="time" required />
             </div>
             <div style="flex:1">
-              <label>Heure de fin (optionnel)</label>
-              <input v-model="form.endTime" type="time" />
+              <label for="event-6">Heure de fin (optionnel)</label>
+              <input id="event-6" v-model="form.endTime" type="time" />
             </div>
           </div>
         </template>
 
-        <label>Lieu (optionnel)</label>
-        <input v-model="form.location" placeholder="Ex: Garderie Lormont" />
+        <label for="event-7">Lieu (optionnel)</label>
+        <input id="event-7" v-model="form.location" placeholder="Ex: Garderie Lormont" />
 
-        <label>Description (optionnel)</label>
-        <textarea v-model="form.description"></textarea>
+        <label for="event-8">Description (optionnel)</label>
+        <textarea id="event-8" v-model="form.description"></textarea>
 
         <!-- La couleur d'un evenement personnel est celle de la personne -->
         <template v-if="form.personId === null">
-          <label>Couleur</label>
-          <input v-model="form.color" type="color" style="padding:4px; max-width:100px" />
+          <label for="event-9">Couleur</label>
+          <input id="event-9" v-model="form.color" type="color" style="padding:4px; max-width:100px" />
         </template>
 
         <label>🔔 Rappel</label>
@@ -130,8 +130,8 @@
           </button>
         </div>
 
-        <label>Répétition</label>
-        <select v-model="form.recurrenceFrequency">
+        <label for="event-10">Répétition</label>
+        <select id="event-10" v-model="form.recurrenceFrequency">
           <option value="NONE">Aucune (une seule fois)</option>
           <option value="DAILY">Tous les jours</option>
           <option value="WEEKLY">Toutes les semaines</option>
@@ -140,8 +140,8 @@
         </select>
 
         <template v-if="form.recurrenceFrequency !== 'NONE'">
-          <label>Tous les combien de {{ intervalUnit }} ?</label>
-          <input v-model.number="form.recurrenceInterval" type="number" min="1" />
+          <label for="event-11">Tous les combien de {{ intervalUnit }} ?</label>
+          <input id="event-11" v-model.number="form.recurrenceInterval" type="number" min="1" />
 
           <template v-if="form.recurrenceFrequency === 'WEEKLY'">
             <label>Jours concernés</label>
@@ -153,8 +153,8 @@
             </div>
           </template>
 
-          <label>Se termine le (optionnel, laisser vide = jamais)</label>
-          <input v-model="form.recurrenceEndDate" type="date" />
+          <label for="event-12">Se termine le (optionnel, laisser vide = jamais)</label>
+          <input id="event-12" v-model="form.recurrenceEndDate" type="date" />
         </template>
 
         <p v-if="error" class="error">{{ error }}</p>

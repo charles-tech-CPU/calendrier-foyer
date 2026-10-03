@@ -41,7 +41,10 @@
         v-for="day in gridDays" :key="day.iso"
         class="day-cell"
         :class="{ 'outside-month': !day.inCurrentMonth, today: day.iso === today }"
+        role="button"
+        tabindex="0"
         @click="openDayPanel(day.iso)"
+        @keydown.enter="openDayPanel(day.iso)"
       >
         <div class="day-number">{{ day.date.getDate() }}</div>
         <div
@@ -64,7 +67,7 @@
   </main>
 
   <!-- Panneau des evenements du jour selectionne -->
-  <div v-if="selectedDay" class="overlay" @click.self="selectedDay = null">
+  <div v-if="selectedDay" class="overlay" @click.self="selectedDay = null" @keydown.esc="selectedDay = null">
     <div class="panel">
       <div class="panel-header">
         <h2 class="date-title" style="margin:0">{{ formatFullDate(selectedDay) }}</h2>
@@ -81,7 +84,10 @@
         class="event-row"
         :class="{ done: occ.done }"
         :style="{ borderLeftColor: occ.color || FAMILY_COLOR }"
+        role="button"
+        tabindex="0"
         @click="openOccurrence(occ)"
+        @keydown.enter.self="openOccurrence(occ)"
       >
         <div class="event-row-icon">{{ occ.icon || DEFAULT_ICON }}</div>
         <PersonAvatar :person="byId(occ.personId)" :size="48" />
