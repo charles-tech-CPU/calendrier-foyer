@@ -1,6 +1,15 @@
 import axios from 'axios'
 
-const BASE_URL = `http://${window.location.hostname}:8084/api`
+// Ports du backend : HTTP en LAN (http://<ip>), HTTPS via Tailscale
+// (https://serveur-foyer.tail0af124.ts.net).
+const PORT_BACKEND_HTTP = 8084
+const PORT_BACKEND_HTTPS = 8384
+
+// L'API suit le protocole de la page : une page HTTPS qui appelle une API HTTP est
+// bloquee par le navigateur ("contenu mixte").
+const BASE_URL = window.location.protocol === 'https:'
+  ? `https://${window.location.hostname}:${PORT_BACKEND_HTTPS}/api`
+  : `http://${window.location.hostname}:${PORT_BACKEND_HTTP}/api`
 const client = axios.create({ baseURL: BASE_URL })
 
 // Construit AAAA-MM-JJ a partir des composantes LOCALES de la date (jamais
