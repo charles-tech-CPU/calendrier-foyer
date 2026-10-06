@@ -232,3 +232,35 @@ label { display: block; font-size: 14px; font-weight: 600; color: var(--text-mut
 .tile.add { border: 3px dashed var(--border); background: var(--surface); }
 .tile-icon { font-size: 40px; line-height: 1; }
 .tile-label { font-size: 13px; font-weight: 700; text-align: center; overflow-wrap: anywhere; }
+
+/* Lien de retour au portail-foyer, tout a gauche de l'en-tete : discret mais visible */
+.portal-link {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--text-muted);
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+.portal-link:hover {
+  color: var(--primary);
+  background: var(--primary-soft);
+  text-decoration: none;
+}
+/* Tablette murale : zone tactile plus grande */
+.title-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.title-group .portal-link {
+  padding: 9px 16px;
+  font-size: 15px;
+}

@@ -1,6 +1,9 @@
 <template>
   <header class="topbar">
-    <h1>📅 Calendrier Foyer</h1>
+    <div class="title-group">
+      <a :href="PORTAL_URL" class="portal-link" title="Retour au portail du foyer">← Portail</a>
+      <h1>📅 Calendrier Foyer</h1>
+    </div>
     <div class="month-nav">
       <button class="icon secondary" @click="previousMonth">‹</button>
       <div class="month-label">{{ monthLabel }}</div>
@@ -138,6 +141,7 @@
 </template>
 
 <script setup>
+import { PORTAL_URL } from '../portal'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import api from '../services/api'
